@@ -29,7 +29,8 @@
     <form method="post" action="/task">
      <input type="text" name="title"/>
      <textarea name="description"></textarea>
-     {% include "partials/form_section_single_select.html" %}
+     <!-- {% include "partials/form_section_single_select.html" %} -->
+     <input type="hidden" name="parent" value={{s.id}} />
      <input type="date" name="due-date"/>
      <input name="task-post" type="submit" value="Submit"/>
     </form>
