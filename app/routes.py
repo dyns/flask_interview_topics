@@ -1,17 +1,13 @@
 
-from flask import render_template, jsonify, abort 
+from flask import render_template, jsonify, abort, url_for, redirect 
 from app import app
 from flask import request
 from app import models
-from app import db
+from app import db	
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	if request.method == 'GET':
-		top_sections = models.Section.query.filter(~models.Section.sub_sections.any()).all()
-		sec_json = [s.json() for s in top_sections]
-		return render_template('index.html', sections=top_sections)
-	elif request.method == 'POST':
+	if request.method == 'POST':
 		title = request.form['title']
 		title = title.strip()
 		parent_id = request.form['parent-id']
@@ -27,17 +23,24 @@ def index():
 					abort(400)
 		if  title:
 			s = models.Section(title)
-			db.session.add(s)
+			s.description = request.form['description']
 			if parent:
-				parent.sub_sections.append(s)			
+				s.parent = parent	
+			db.session.add(s)
 			db.session.commit()
-			return jsonify(request.form)
+			return redirect(url_for('index'))
 		else:
-			abort(400)	
-
+			abort(400)
+	elif request.method == 'GET':
+		top_sections = models.Section.query.filter(models.Section.parent == None).all()
+		return render_template('index.html', sections=top_sections)
 
 @app.route('/s')
 def sections():
-	sections = models.Section.query.filter(~models.Section.sub_sections.any()).all()
+	sections = models.Section.query.all()
 	return jsonify([s.json() for s in sections])
+
+
+
+
 

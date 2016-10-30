@@ -18,8 +18,14 @@
   <li>{{s.title}}</li>
   {% if s.sub_sections %}
    <ul>{{loop(s.sub_sections)}}</ul>
-  {% endif %}
-   
+  {% else %}
+   <ul>
+    <form name="task">
+     <input type="text" name="task-title"/>
+     <input type="submit" value="Submit"/>
+    </form>
+   </ul>
+  {% endif %} 
  {% endfor %}
  </ul>
 
@@ -38,8 +44,11 @@
 
 
  <form method="post">
+
   <input type="text" name="title"/>
-  
+
+  <textarea name="description"></textarea>  
+
  <select name="parent-id">
    <option value="">No Parent</option>
    {% for s in sections recursive %}
