@@ -5,14 +5,6 @@
 </head>
 <body>
 
- <p>{{sections}}</p>
-
- <form method="post">
-  <input type="text" name="title"/>
-  <input type="submit" value="Submit"/>
- </form>
-
-
  getting the interview
 
  passing the interview
@@ -20,6 +12,19 @@
  misc prep
 
  target companies - tracking progress with specific companies and keeping data like emails and dates and such - maybe connect to an api here, to get images, or like intern suply checking when aplications open - etc ... keeping notes
+
+ <ul>
+ {% for s in sections recursive %}
+  <li>{{s.title}}</li>
+  {% if s.sub_sections %}
+   <ul>{{loop(s.sub_sections)}}</ul>
+  {% endif %}
+   
+ {% endfor %}
+ </ul>
+
+
+
 
  
  <h2>Section: Interview Prep</h2>
@@ -32,6 +37,23 @@
  <h2>Networking</h2>
 
 
+ <form method="post">
+  <input type="text" name="title"/>
+  
+ <select name="parent-id">
+   <option value="">No Parent</option>
+   {% for s in sections recursive %}
+    <option value={{s.id}}>{{s.title}}</option>
+    {% if s.sub_sections %}
+     {{loop(s.sub_sections)}}
+    {% endif %}
+   {% endfor %}
+  </select>
+  
+  <input type="submit" value="Submit"/>
+ </form>
+
+ 
 </body>
 </html>
 
