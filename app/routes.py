@@ -3,7 +3,8 @@ from flask import render_template, jsonify, abort, url_for, redirect
 from app import app
 from flask import request
 from app import models
-from app import db	
+from app import db
+from datetime import datetime
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -34,6 +35,19 @@ def index():
 	elif request.method == 'GET':
 		top_sections = models.Section.query.filter(models.Section.parent == None).all()
 		return render_template('index.html', sections=top_sections)
+
+@app.route('/task', methods=['POST'])
+def new_task():
+	title = request.form['title'].strip()
+	description = request.form['description'].strip()
+	due_date = request.form['due-date']
+	due_date = datetime.strptime(due_date, '%Y-%m-%d')
+	parent_id = request.form['parent']
+	parent = models.Section.query.get(parent_id)
+	t = models.Task(title, description, due_date, parent)
+	db.session.add(t)
+	db.session.commit()
+	return redirect(url_for('index'))
 
 @app.route('/s')
 def sections():

@@ -20,18 +20,24 @@
    <ul>{{loop(s.sub_sections)}}</ul>
   {% else %}
    <ul>
-    <form name="task">
-     <input type="text" name="task-title"/>
-     <input type="submit" value="Submit"/>
+
+   {% for t in s.tasks %}
+    <li>{{t.title}}</li>
+   {% endfor  %}
+    
+    <li>
+    <form method="post" action="/task">
+     <input type="text" name="title"/>
+     <textarea name="description"></textarea>
+     {% include "partials/form_section_single_select.html" %}
+     <input type="date" name="due-date"/>
+     <input name="task-post" type="submit" value="Submit"/>
     </form>
+    </li>
    </ul>
   {% endif %} 
  {% endfor %}
  </ul>
-
-
-
-
  
  <h2>Section: Interview Prep</h2>
  <h3>Sub Section: Data Structure</h3>
@@ -59,7 +65,7 @@
    {% endfor %}
   </select>
   
-  <input type="submit" value="Submit"/>
+  <input name="section-post" type="submit" value="Submit"/>
  </form>
 
  

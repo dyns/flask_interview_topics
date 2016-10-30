@@ -11,7 +11,7 @@ class Section(db.Model):
 	parent_id = db.Column(db.Integer, db.ForeignKey('section.id'))
 	sub_sections = db.relationship('Section', backref=db.backref('parent', remote_side=[id]))
 
-	tasks = db.relationship('Task')
+	tasks = db.relationship('Task', backref=db.backref('parent'))
 
 	def __init__(self, title, description=None, due_date=None, sub_sections=None):
 		if not sub_sections:
@@ -39,9 +39,11 @@ class Task(db.Model):
 	due_date = db.Column(db.DateTime)
 	parent_section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
 
-	def __init__(self, title, description=None, due_date=None):
+	def __init__(self, title, description=None, due_date=None, parent=None):
 		self.title = title
 		self.description = description
 		self.due_date = due_date
+		if parent:
+			self.parent = parent
 
 
