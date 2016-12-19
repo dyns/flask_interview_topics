@@ -2,27 +2,28 @@
 <html>
 <head>
  <title>Overview</title>
+ <link rel=stylesheet type=text/css href="{{ url_for('static', filename='base.css') }}">
+ <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
- getting the interview
-
- passing the interview
-
- misc prep
-
- target companies - tracking progress with specific companies and keeping data like emails and dates and such - maybe connect to an api here, to get images, or like intern suply checking when aplications open - etc ... keeping notes
+<h1>Interview TODO:</h1>
 
  <ul>
  {% for s in sections recursive %}
-  <li>{{s.title}}</li>
+  <li>{{s.title}} - comp: {{s.completed_tasks}} total:{{s.total_tasks}}</li>
   {% if s.sub_sections %}
    <ul>{{loop(s.sub_sections)}}</ul>
   {% else %}
    <ul>
 
    {% for t in s.tasks %}
-    <li>{{t.title}}</li>
+	{% if t.completed %}
+	 {% set completed = 'checked' %}
+	{% else %}
+	 {% set completed = '' %}
+	{% endif %}
+    <li>{{t.title}} <label><input type="checkbox" {{completed}}  >Completed?</label></li>
    {% endfor  %}
     
     <li>
@@ -32,6 +33,7 @@
      <!-- {% include "partials/form_section_single_select.html" %} -->
      <input type="hidden" name="parent" value={{s.id}} />
      <input type="date" name="due-date"/>
+     <input type="checkbox" value="1" name="completed"/>
      <input name="task-post" type="submit" value="Submit"/>
     </form>
     </li>
@@ -40,15 +42,7 @@
  {% endfor %}
  </ul>
  
- <h2>Section: Interview Prep</h2>
- <h3>Sub Section: Data Structure</h3>
- <h3>Sub Sub Section: Trees</h3>
- <p>Tree Task, Traverse in Order</p>
-
- <h2>Projects</h2>
-
- <h2>Networking</h2>
-
+<h2>New Top Level Section</h2>
 
  <form method="post">
 

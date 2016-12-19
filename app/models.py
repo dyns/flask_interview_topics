@@ -20,6 +20,8 @@ class Section(db.Model):
 		self.due_date = due_date
 		self.sub_sections = sub_sections
 		self.description = description
+		self.total_tasks = 0
+		self.completed_tasks = 0
 
 	def json(self):
 		sub_section_json = [s.json() for s in self.sub_sections]
@@ -38,11 +40,13 @@ class Task(db.Model):
 	description = db.Column(db.Text)
 	due_date = db.Column(db.DateTime)
 	parent_section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
+	completed = db.Column(db.Boolean)
 
-	def __init__(self, title, description=None, due_date=None, parent=None):
+	def __init__(self, title, description=None, due_date=None, completed = False, parent=None):
 		self.title = title
 		self.description = description
 		self.due_date = due_date
+		self.completed = completed
 		if parent:
 			self.parent = parent
 
