@@ -66,7 +66,7 @@ def set_section_progress(section):
 		
 
 @app.route('/task', methods=['POST'])
-def new_task():
+def task_post():
 	completed = False
 	if 'completed' in request.form:
 		completed = request.form['completed'] == '1'
@@ -81,6 +81,21 @@ def new_task():
 	db.session.add(t)
 	db.session.commit()
 	return redirect(url_for('index'))
+
+@app.route('/task/<int:task_id>', methods=['POST'])
+def update_task(task_id):
+	print('asdfasdf')
+	abort(404)
+
+	task = models.Task.query.get(task_id)
+	if task is None:
+		abort(404)
+	if 'completed' in request.form:
+		completed = request.form['completed'] == '1'
+		task.completed = completed
+	db.session.commit()
+	return redirect(url_for('index'))
+	
 
 @app.route('/s')
 def sections():

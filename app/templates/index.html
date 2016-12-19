@@ -23,7 +23,13 @@
 	{% else %}
 	 {% set completed = '' %}
 	{% endif %}
-    <li>{{t.title}} <label><input type="checkbox" {{completed}}  >Completed?</label></li>
+    <li>{{t.title}}
+	<a href="/task/{{t.id}}">{{t.id}}</a> 
+     <form method="post" action"/task/{{t.id}}">
+      <label><input type="checkbox" name="completed" value="1" {{completed}} />Completed?</label>
+      <input name="task-update" type="submit" value="Submit" />
+     </form>
+    </li>
    {% endfor  %}
     
     <li>
