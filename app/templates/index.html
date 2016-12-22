@@ -24,14 +24,16 @@
 	 {% set completed = '' %}
 	{% endif %}
     <li>{{t.title}}
-	<a href="/task/{{t.id}}">{{t.id}}</a> 
-     <form method="post" action"/task/{{t.id}}">
-      <label><input type="checkbox" name="completed" value="1" {{completed}} />Completed?</label>
+     <form method="post" action="/task/{{t.id}}">
+       <div>
+         <label for="conf-{{t.id}}">Confidence:</label>
+         <input type="number" min="0" max="10" id="conf-{{t.id}}" name="confidence" value={{t.confidence}} />
+     </div>
       <input name="task-update" type="submit" value="Submit" />
      </form>
     </li>
    {% endfor  %}
-    
+
     <li>
     <form method="post" action="/task">
      <input type="text" name="title"/>
@@ -39,22 +41,21 @@
      <!-- {% include "partials/form_section_single_select.html" %} -->
      <input type="hidden" name="parent" value={{s.id}} />
      <input type="date" name="due-date"/>
-     <input type="checkbox" value="1" name="completed"/>
      <input name="task-post" type="submit" value="Submit"/>
     </form>
     </li>
    </ul>
-  {% endif %} 
+  {% endif %}
  {% endfor %}
  </ul>
- 
+
 <h2>New Top Level Section</h2>
 
  <form method="post">
 
   <input type="text" name="title"/>
 
-  <textarea name="description"></textarea>  
+  <textarea name="description"></textarea>
 
  <select name="parent-id">
    <option value="">No Parent</option>
@@ -65,11 +66,10 @@
     {% endif %}
    {% endfor %}
   </select>
-  
+
   <input name="section-post" type="submit" value="Submit"/>
  </form>
 
- 
+
 </body>
 </html>
-
