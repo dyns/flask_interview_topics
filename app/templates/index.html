@@ -1,63 +1,67 @@
+<!DOCTYPE html>
 
-<html>
 <head>
- <title>Overview</title>
- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='base.css') }}">
- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <title>Overview</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='base.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='pure.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menus.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='grids-responsive.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
 
-<h1>Interview TODO:</h1>
+    <h1>Interview TODO:</h1>
 
- <ul>
- {% for s in sections recursive %}
-  <li>{{s.title}} - comp: {{s.completed_tasks}} total:{{s.total_tasks}}</li>
-  {% if s.sub_sections %}
-   <ul>{{loop(s.sub_sections)}}</ul>
-  {% else %}
-   <ul>
+    <button class="pure-button pure-button-primary">New Top Section</button>
+    <ul>
+        {% for s in sections recursive %}
 
-   {% for t in s.tasks %}
-	{% if t.completed %}
-	 {% set completed = 'checked' %}
-	{% else %}
-	 {% set completed = '' %}
-	{% endif %}
-    <li>{{t.title}}
-     <form method="post" action="/task/{{t.id}}">
-       <div>
-         <label for="conf-{{t.id}}">Confidence:</label>
-         <input type="number" min="0" max="10" id="conf-{{t.id}}" name="confidence" value={{t.confidence}} />
-     </div>
-      <input name="task-update" type="submit" value="Submit" />
-     </form>
-    </li>
-   {% endfor  %}
+        <li>Section: {{s.title}}: confidence-{{ (s.completed_tasks / s.total_tasks * 100) | int}}&#37;</li>
+        {% if s.sub_sections %}
+        <ul>{{loop(s.sub_sections)}}</ul>
+        {% else %}
+        <ul>
+            {% for t in s.tasks %} {% if t.completed %} {% set completed = 'checked' %} {% else %} {% set completed = '' %} {% endif %}
+            <li>
+                Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;
+                <!-- <form method="post" action="/task/{{t.id}}" class="pure-form">
+                    <div>
+                        <label for="conf-{{t.id}}">Confidence:</label>
+                        <input type="number" min="0" max="10" id="conf-{{t.id}}" name="confidence" value={{t.confidence}} />
+                    </div>
+                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                </form> -->
+            </li>
+            {% endfor %}
+        </ul>
 
-    <li>
-    <form method="post" action="/task">
-     <input type="text" name="title"/>
-     <textarea name="description"></textarea>
-     <!-- {% include "partials/form_section_single_select.html" %} -->
-     <input type="hidden" name="parent" value={{s.id}} />
-     <input type="date" name="due-date"/>
-     <input name="task-post" type="submit" value="Submit"/>
-    </form>
-    </li>
-   </ul>
-  {% endif %}
- {% endfor %}
- </ul>
+        {% endif %}
 
-<h2>New Top Level Section</h2>
+        <!-- <li>
+            <form method="post" action="/task" class="pure-form">
+                <input type="text" name="title" />
+                <textarea name="description"></textarea>
+                <input type="hidden" name="parent" value={{s.id}} />
+                <input type="date" name="due-date" />
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </form>
+        </li> -->
 
- <form method="post">
+        {% endfor %}
 
-  <input type="text" name="title"/>
+    </ul>
 
-  <textarea name="description"></textarea>
+    <!-- <h2>New Top Level Section</h2>
 
- <select name="parent-id">
+    <form method="post" class="pure-form">
+
+        <input type="text" name="title" />
+
+        <textarea name="description"></textarea>
+
+        <select name="parent-id">
    <option value="">No Parent</option>
    {% for s in sections recursive %}
     <option value={{s.id}}>{{s.title}}</option>
@@ -67,9 +71,27 @@
    {% endfor %}
   </select>
 
-  <input name="section-post" type="submit" value="Submit"/>
- </form>
+        <button type="submit" class="pure-button pure-button-primary">Submit</button>
+
+    </form> -->
+
+
+          <div class="pure-menu">
+              <span class="pure-menu-heading">Yahoo Sites</span>
+
+              <ul class="pure-menu-list">
+                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">Flickr</a></li>
+                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">Messenger</a></li>
+                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">Sports</a></li>
+                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">Finance</a></li>
+                  <li class="pure-menu-heading">More Sites</li>
+                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">Games</a></li>
+                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">News</a></li>
+                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">OMG!</a></li>
+              </ul>
+          </div>
 
 
 </body>
+
 </html>

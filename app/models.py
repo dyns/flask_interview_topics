@@ -1,7 +1,6 @@
 
 from app import db
 
-
 class Section(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(80), unique=True)
@@ -47,5 +46,4 @@ class Task(db.Model):
 		self.description = description
 		self.due_date = due_date
 		self.confidence = confidence
-		if parent:
-			self.parent = parent
+		self.parent = parent

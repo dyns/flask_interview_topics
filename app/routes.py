@@ -56,6 +56,7 @@ def set_section_progress(section):
 			total_tasks += sub_total_tasks
 			completed_tasks += sub_completed_tasks
 
+	total_tasks = total_tasks if total_tasks > 0 else 1
 	section.total_tasks = total_tasks
 	section.completed_tasks = completed_tasks
 
