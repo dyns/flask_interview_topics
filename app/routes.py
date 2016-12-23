@@ -99,5 +99,5 @@ def section(sec_id):
 	if not sec:
 		abort(404)
 	else:
-		add_progress(sec.sub_sections)
+		add_progress([sec])
 		return render_template('section.html', sec=sec)

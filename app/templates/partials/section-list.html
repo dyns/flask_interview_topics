@@ -6,17 +6,8 @@
     <ul>{{loop(s.sub_sections)}}</ul>
     {% else %}
     <ul>
-        {% for t in s.tasks %} {% if t.completed %} {% set completed = 'checked' %} {% else %} {% set completed = '' %} {% endif %}
-        <li>
-            <a href="/task/{{t.id}}" class="pure-menu-link">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
-            <!-- <form method="post" action="/task/{{t.id}}" class="pure-form">
-                <div>
-                    <label for="conf-{{t.id}}">Confidence:</label>
-                    <input type="number" min="0" max="10" id="conf-{{t.id}}" name="confidence" value={{t.confidence}} />
-                </div>
-                <button type="submit" class="pure-button pure-button-primary">Submit</button>
-            </form> -->
-        </li>
+        {% for t in s.tasks %}
+        <li><a href="/task/{{t.id}}" class="pure-menu-link">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a> </li>
         {% endfor %}
     </ul>
 
@@ -33,5 +24,9 @@
     </li> -->
 
     {% endfor %}
+
+    {% for t in top_section_tasks %}
+    <li><a href="/task/{{t.id}}" class="pure-menu-link">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a> </li>
+    {% endfor%}
 
 </ul>

@@ -15,32 +15,9 @@
 
         <button class="pure-button pure-button-primary">New Top Section</button>
 
-        {% with sections=sections %}
+        {% with sections=sections, top_section_tasks=[] %}
         {% include "partials/section-list.html" %}
         {% endwith %}
-
-        <!-- <h2>New Top Level Section</h2>
-
-        <form method="post" class="pure-form">
-
-            <input type="text" name="title" />
-
-            <textarea name="description"></textarea>
-
-            <select name="parent-id">
-       <option value="">No Parent</option>
-       {% for s in sections recursive %}
-        <option value={{s.id}}>{{s.title}}</option>
-        {% if s.sub_sections %}
-         {{loop(s.sub_sections)}}
-        {% endif %}
-       {% endfor %}
-      </select>
-
-            <button type="submit" class="pure-button pure-button-primary">Submit</button>
-
-        </form>
-       -->
 
     </div>
 </body>

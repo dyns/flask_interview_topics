@@ -1,20 +1,43 @@
  {% extends "base.html" %} {% block content %}
-<h1>Section: {{sec.title}}</h1>
 
-<h2></h2>
-<p>
-  {{sec.description}}
-</p>
+<form class="pure-form pure-form-stacked">
+    <fieldset>
+        <legend>Section</legend>
 
-{% with sections=sec.sub_sections %}
-{% include "partials/section-list.html" %}
-{% endwith %}
+  <label for="header-section-name">Section Name</label>
+<input id="header-section-name" type="text" name="title" placeholder="Section Name" value="{{sec.title}}" />
+
+        <label for="header-section-description">Section Description</label>
+        <textarea id="header-section-description" name="description" placeholder="Description">{{sec.description}}</textarea>
+
+        <button type="submit" class="pure-button pure-button-primary">Update Section Fields</button>
+    </fieldset>
+</form>
+
+<h3>Confidence: {{ (sec.completed_tasks / sec.total_tasks * 100) | int}}</h3>
+
+
+{% with sections=sec.sub_sections, top_section_tasks=sec.tasks%} {% include "partials/section-list.html" %} {% endwith %}
+
+<form method="post" action="/task" class="pure-form">
+    <legend>Add Task</legend>
+    <fieldset>
+        <input type="text" name="title" placeholder="task name" />
+        <textarea name="description" placeholder="task description"></textarea>
+        <input type="hidden" name="parent" value={{sec.id}} />
+        <input type="date" name="due-date" />
+        <button type="submit" class="pure-button pure-button-primary">Add new task</button>
+    </fieldset>
+</form>
 
 <form method="post" class="pure-form" action="/">
-  <input type="text" name="title" />
-  <textarea name="description"></textarea>
-  <input type="hidden" value="{{sec.id}}" name="parent-id"/>
-  <button type="submit" class="pure-button pure-button-primary">Submit</button>
+    <legend>Add sub section</legend>
+    <fieldset>
+        <input type="text" name="title" placeholder="section name" />
+        <textarea name="description" placeholder="section description"></textarea>
+        <input type="hidden" value="{{sec.id}}" name="parent-id" />
+        <button type="submit" class="pure-button pure-button-primary">Add new sub section</button>
+    </fieldset>
 </form>
 
 {% endblock %}
