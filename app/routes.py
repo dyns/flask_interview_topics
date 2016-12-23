@@ -77,16 +77,28 @@ def task_post():
 
 @app.route('/task/<int:task_id>', methods=['GET','POST'])
 def update_task(task_id):
+	task = models.Task.query.get(task_id)
+	if task is None:
+		abort(404)
 	if request.method == 'POST':
-		task = models.Task.query.get(task_id)
-		if task is None:
-			abort(404)
 		if 'confidence' in request.form:
 			task.confidence = int(request.form['confidence'])
+		if 'title' in request.form:
+			task.title = str(request.form['title'])
+		if 'description' in request.form:
+			task.description = str(request.form['description'])
+		if 'due-date' in request.form:
+			due_date = request.form['due-date']
+			try:
+				due_date = datetime.strptime(due_date, '%Y-%m-%d')
+			except ValueError:
+				task.due_date = None
+			else:
+				task.due_date = due_date
 		db.session.commit()
 		return redirect(url_for('index'))
 	else:
-		return str(task_id)
+		return render_template('task.html', task=task)
 
 @app.route('/s')
 def sections():
