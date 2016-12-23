@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Overview</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='pure.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='grids-responsive.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="container">
+
+        {% block content %}{% endblock %}
+
+
+    </div>
+</body>
+
+
+</html>

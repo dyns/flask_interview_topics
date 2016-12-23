@@ -77,15 +77,27 @@ def task_post():
 
 @app.route('/task/<int:task_id>', methods=['GET','POST'])
 def update_task(task_id):
-	task = models.Task.query.get(task_id)
-	if task is None:
-		abort(404)
-	if 'confidence' in request.form:
-		task.confidence = int(request.form['confidence'])
-	db.session.commit()
-	return redirect(url_for('index'))
+	if request.method == 'POST':
+		task = models.Task.query.get(task_id)
+		if task is None:
+			abort(404)
+		if 'confidence' in request.form:
+			task.confidence = int(request.form['confidence'])
+		db.session.commit()
+		return redirect(url_for('index'))
+	else:
+		return str(task_id)
 
 @app.route('/s')
 def sections():
 	sections = models.Section.query.all()
 	return jsonify([s.json() for s in sections])
+
+@app.route('/s/<int:sec_id>')
+def section(sec_id):
+	sec = models.Section.query.get(sec_id)
+	if not sec:
+		abort(404)
+	else:
+		add_progress(sec.sub_sections)
+		return render_template('section.html', sec=sec)
