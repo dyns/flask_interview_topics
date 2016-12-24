@@ -140,3 +140,7 @@ def remove_children(sec):
 	for sub_s in sec.sub_sections:
 		remove_children(sub_s)
 	db.session.delete(sec)
+
+@app.route('/getting')
+def getting_interview():
+	return render_template('getting-the-interview.html')

@@ -1,32 +1,14 @@
-<!DOCTYPE html>
+ {% extends "base.html" %} {% block content %}
 
-<head>
-    <title>Overview</title>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='pure.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='grids-responsive.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+<h1>Interview TODO:</h1> {% with sections=sections, top_section_tasks=[] %} {% include "partials/section-list.html" %} {% endwith %}
 
-<body>
-    <div id="container">
+<form method="post" class="pure-form" action="/">
+    <legend>Add Top Section</legend>
+    <fieldset>
+        <input type="text" name="title" placeholder="section name" required/>
+        <textarea name="description" placeholder="section description"></textarea>
+        <button type="submit" class="pure-button pure-button-primary">Add Top Section</button>
+    </fieldset>
+</form>
 
-        <h1>Interview TODO:</h1>
-
-        {% with sections=sections, top_section_tasks=[] %}
-        {% include "partials/section-list.html" %}
-        {% endwith %}
-
-        <form method="post" class="pure-form" action="/">
-            <legend>Add Top Section</legend>
-            <fieldset>
-                <input type="text" name="title" placeholder="section name" required/>
-                <textarea name="description" placeholder="section description"></textarea>
-                <button type="submit" class="pure-button pure-button-primary">Add Top Section</button>
-            </fieldset>
-        </form>
-
-    </div>
-</body>
-
-</html>
+{% endblock %}
