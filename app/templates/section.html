@@ -41,4 +41,12 @@
     </fieldset>
 </form>
 
+<form method="post" action="/s/{{sec.id}}" class="pure-form">
+    <fieldset>
+        <legend>Delete Section and all Children</legend>
+        <label for="del-confirm"><input required id="del-confirm" name="delete-sec" type="checkbox" value="delete"> Are you sure?</label>
+        <button type="submit" class="pure-button pure-button-primary">Delete This Section and Children</button>
+    </fieldset>
+</form>
+
 {% endblock %}

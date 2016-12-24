@@ -11,7 +11,7 @@
         <label for="task-description">Description</label>
         <textarea id="task-description" name="description" placeholder="Task Description">{{task.description}}</textarea>
 
-        <label for="task-conf">Confidence</label>
+        <label for="task-conf">Confidence out of <strong>10</strong></label>
         <input id="task-conf" type="number" min="0" max="10" name="confidence" value="{{task.confidence}}" />
 
         <input type="hidden" name="parent" value={{task.parent.id}} />

@@ -119,11 +119,24 @@ def sections():
 	sections = models.Section.query.all()
 	return jsonify([s.json() for s in sections])
 
-@app.route('/s/<int:sec_id>')
+@app.route('/s/<int:sec_id>', methods=['GET','POST'])
 def section(sec_id):
 	sec = models.Section.query.get(sec_id)
 	if not sec:
 		abort(404)
+
+	if request.method == 'POST':
+		if 'delete-sec' in request.form and request.form['delete-sec'] == 'delete':
+			remove_children(sec)
+			db.session.commit()
+			return redirect(url_for('index'))
 	else:
 		add_progress([sec])
 		return render_template('section.html', sec=sec)
+
+def remove_children(sec):
+	for task in sec.tasks:
+		db.session.delete(task)
+	for sub_s in sec.sub_sections:
+		remove_children(sub_s)
+	db.session.delete(sec)
