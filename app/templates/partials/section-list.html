@@ -4,17 +4,15 @@
     <li><a class="pure-menu-link" href="/s/{{s.id}}">Section: {{s.title}}: confidence-{{ (s.completed_tasks / s.total_tasks * 100) | int}}&#37;</a></li>
     {% if s.sub_sections %}
     <ul>{{loop(s.sub_sections)}}</ul>
-    {% else %}
+    {% endif %}
+
     <ul>
         {% for t in s.tasks %}
         <li><a href="/task/{{t.id}}" class="pure-menu-link">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a> </li>
         {% endfor %}
     </ul>
 
-    {% endif %}
-    {% endfor %}
-
-    {% for t in top_section_tasks %}
+    {% endfor %} {% for t in top_section_tasks %}
     <li><a href="/task/{{t.id}}" class="pure-menu-link">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a> </li>
     {% endfor%}
 

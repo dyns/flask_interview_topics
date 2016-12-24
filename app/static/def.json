@@ -1,0 +1,54 @@
+{
+  "sections":[
+    {
+      "title":"Algorithmic complexity / Big-O / Asymptotic analysis",
+      "description": "",
+      "sub-sections":[],
+      "tasks":[]
+    },
+    {
+      "title":"Data Structures",
+      "description": "",
+      "sub-sections":[
+        {
+          "title":"Trees",
+          "description": "",
+          "sub-sections":[],
+          "tasks":[]
+        },
+        {
+          "title":"Graphs",
+          "description": "",
+          "sub-sections":[],
+          "tasks":[]
+        }
+      ],
+      "tasks":[
+        {"title": "Arrays"},
+        {"title": "Linked Lists"},
+        {"title": "Stack"},
+        {"title": "Queue"},
+        {"title": "Hash table"}
+      ]
+    },
+    {
+      "title":"Algorithms",
+      "description": "",
+      "sub-sections":[
+        {
+          "title":"Sorting",
+          "description": "",
+          "sub-sections":[],
+          "tasks":[
+            {"title":"selection"},
+            {"title":"insertion"},
+            {"title":"heapsort"},
+            {"title":"quicksort"},
+            {"title":"merge sort"}
+          ]
+        }
+      ],
+      "tasks":[]
+    }
+  ]
+}
