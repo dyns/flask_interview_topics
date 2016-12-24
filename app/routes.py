@@ -11,27 +11,32 @@ def index():
 	if request.method == 'POST':
 		title = request.form['title']
 		title = title.strip()
-		parent_id = request.form['parent-id']
-		parent = None
-		if parent_id:
+
+		if not title:
+			abort(400)
+
+		s = models.Section(title)
+
+		if 'description' in request.form:
+			s.description = request.form['description'].strip()
+
+		if 'parent-id' in request.form:
+			parent_id = request.form['parent-id'].strip()
 			try:
 				parent_id = int(parent_id)
 			except ValueError:
 				abort(400)
 			else:
 				parent = models.Section.query.get(parent_id)
-				if not parent:
-					abort(400)
-		if  title:
-			s = models.Section(title)
-			s.description = request.form['description']
-			if parent:
-				s.parent = parent
-			db.session.add(s)
-			db.session.commit()
-			return redirect(url_for('index'))
-		else:
-			abort(400)
+				if parent:
+					s.parent = parent
+				else:
+					abort(404)
+
+		db.session.add(s)
+		db.session.commit()
+		return redirect(url_for('index'))
+
 	elif request.method == 'GET':
 		top_sections = models.Section.query.filter(models.Section.parent == None).all()
 		add_progress(top_sections)

@@ -13,11 +13,18 @@
 
         <h1>Interview TODO:</h1>
 
-        <button class="pure-button pure-button-primary">New Top Section</button>
-
         {% with sections=sections, top_section_tasks=[] %}
         {% include "partials/section-list.html" %}
         {% endwith %}
+
+        <form method="post" class="pure-form" action="/">
+            <legend>Add Top Section</legend>
+            <fieldset>
+                <input type="text" name="title" placeholder="section name" required/>
+                <textarea name="description" placeholder="section description"></textarea>
+                <button type="submit" class="pure-button pure-button-primary">Add Top Section</button>
+            </fieldset>
+        </form>
 
     </div>
 </body>

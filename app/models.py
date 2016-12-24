@@ -3,7 +3,7 @@ from app import db
 
 class Section(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(80), unique=True)
+	title = db.Column(db.String(80))
 	description = db.Column(db.Text)
 	due_date = db.Column(db.DateTime)
 
