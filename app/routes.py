@@ -86,6 +86,10 @@ def update_task(task_id):
 	if task is None:
 		abort(404)
 	if request.method == 'POST':
+		if 'delete-task' in request.form and request.form['delete-task'] == 'delete':
+			db.session.delete(task)
+			db.session.commit()
+			return redirect(url_for('index'))
 		if 'confidence' in request.form:
 			task.confidence = int(request.form['confidence'])
 		if 'title' in request.form:

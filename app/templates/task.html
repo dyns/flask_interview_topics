@@ -1,31 +1,36 @@
- {% extends "base.html" %}
- {% block content %}
- <h1>Task: {{task.title}}</h1>
+ {% extends "base.html" %} {% block content %}
+<h1>Task: {{task.title}}</h1>
 
- <form method="post" action="/task/{{task.id}}" class="pure-form pure-form-stacked">
-        <fieldset>
-            <legend>Update Task</legend>
+<form method="post" action="/task/{{task.id}}" class="pure-form pure-form-stacked">
+    <fieldset>
+        <legend>Update Task</legend>
 
-            <label for="task-title">Name</label>
-            <input id="task-title" type="text" name="title" placeholder="Task Name" value="{{task.title}}"/>
+        <label for="task-title">Name</label>
+        <input id="task-title" type="text" name="title" placeholder="Task Name" value="{{task.title}}" />
 
-            <label for="task-description">Description</label>
-            <textarea id="task-description" name="description" placeholder="Task Description">{{task.description}}</textarea>
+        <label for="task-description">Description</label>
+        <textarea id="task-description" name="description" placeholder="Task Description">{{task.description}}</textarea>
 
-            <label for="task-conf">Confidence</label>
-            <input id="task-conf" type="number" min="0" max="10" name="confidence" value="{{task.confidence}}"/>
+        <label for="task-conf">Confidence</label>
+        <input id="task-conf" type="number" min="0" max="10" name="confidence" value="{{task.confidence}}" />
 
-            <input type="hidden" name="parent" value={{task.parent.id}} />
+        <input type="hidden" name="parent" value={{task.parent.id}} />
 
-            <label for="task-date">Due Date</label>
-            {% if task.due_date %}
-            <input id="task-date" type="date" name="due-date" value="{{task.due_date.strftime('%Y-%m-%d')}}"/>
-            {% else %}
-            <input id="task-date" type="date" name="due-date"/>
-            {% endif %}
+        <label for="task-date">Due Date</label> {% if task.due_date %}
+        <input id="task-date" type="date" name="due-date" value="{{task.due_date.strftime('%Y-%m-%d')}}" /> {% else %}
+        <input id="task-date" type="date" name="due-date" /> {% endif %}
 
-            <button type="submit" class="pure-button pure-button-primary">Update Task</button>
-        </fieldset>
-    </form>
+        <button type="submit" class="pure-button pure-button-primary">Update Task</button>
+    </fieldset>
+</form>
 
- {% endblock %}
+<form method="post" action="/task/{{task.id}}" class="pure-form">
+    <fieldset>
+        <legend>Delete Task</legend>
+
+        <label for="del-confirm"><input id="del-confirm" name="delete-task" type="checkbox" value="delete"> Are you sure?</label>
+
+        <button type="submit" class="pure-button pure-button-primary">Delete This Task</button>
+    </fieldset>
+</form>
+{% endblock %}
