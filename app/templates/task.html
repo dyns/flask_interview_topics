@@ -16,10 +16,6 @@
 
         <input type="hidden" name="parent" value={{task.parent.id}} />
 
-        <label for="task-date">Due Date</label> {% if task.due_date %}
-        <input id="task-date" type="date" name="due-date" value="{{task.due_date.strftime('%Y-%m-%d')}}" /> {% else %}
-        <input id="task-date" type="date" name="due-date" /> {% endif %}
-
         <button type="submit" class="pure-button pure-button-primary">Update Task</button>
     </fieldset>
 </form>

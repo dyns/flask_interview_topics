@@ -6,13 +6,22 @@
 {% include "partials/section-list.html" %}
 {% endwith %}
 
-<form method="post" class="pure-form" action="/">
-    <legend>Add Top Section</legend>
-    <fieldset>
-        <input type="text" name="title" placeholder="section name" required/>
-        <textarea name="description" placeholder="section description"></textarea>
-        <button type="submit" class="pure-button pure-button-primary">Add Top Section</button>
-    </fieldset>
-</form>
+  <legend>
+  Add new top level section:
+  </legend>
+
+<div>
+  <form>
+    <div class="form-group">
+      <label for="topLevelSectionTitle">New Section Name</label>
+      <input type="text" id="topLevelSectionTitle" name="title" class="form-control" placeholder="name" required/>
+    </div>
+    <div class="form-group">
+      <label for="topLevelSectionDescription">New Section Description</label>
+      <textarea id="topLevelSectionDescription" name="description"  class="form-control" placeholder="description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Add Top Section</button>
+  </form>
+</div>
 
 {% endblock %}

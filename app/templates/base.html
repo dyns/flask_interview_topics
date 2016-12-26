@@ -17,11 +17,23 @@
 <body>
     <div class="container">
 
-        <div class="pure-menu pure-menu-horizontal">
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
-            </ul>
-        </div>
+      <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed"  aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Home</a>
+    </div>
+
+  </div><!-- /.container-fluid -->
+</nav>
+
+
 
         {% block content %}{% endblock %}
 

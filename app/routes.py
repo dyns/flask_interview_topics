@@ -71,16 +71,9 @@ def set_section_progress(section):
 def task_post():
 	title = request.form['title'].strip()
 	description = request.form['description'].strip()
-	due_date = None
-	if 'due-date' in request.form and request.form['due-date'].strip():
-		try:
-			due_date = datetime.strptime(request.form['due-date'].strip(), '%Y-%m-%d')
-		except ValueError:
-			abort(400)
-
 	parent_id = request.form['parent']
 	parent = models.Section.query.get(parent_id)
-	t = models.Task(title, description, due_date, 0, parent)
+	t = models.Task(title, description, None, 0, parent)
 	db.session.add(t)
 	db.session.commit()
 	return redirect(url_for('index'))
@@ -101,14 +94,6 @@ def update_task(task_id):
 			task.title = str(request.form['title'])
 		if 'description' in request.form:
 			task.description = str(request.form['description'])
-		if 'due-date' in request.form:
-			due_date = request.form['due-date']
-			try:
-				due_date = datetime.strptime(due_date, '%Y-%m-%d')
-			except ValueError:
-				task.due_date = None
-			else:
-				task.due_date = due_date
 		db.session.commit()
 		return redirect(url_for('index'))
 	else:
