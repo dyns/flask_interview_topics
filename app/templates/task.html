@@ -1,32 +1,38 @@
  {% extends "base.html" %} {% block content %}
-<h1>Task: {{task.title}}</h1>
+<h1>{{task.title}}</h1>
 
-<form method="post" action="/task/{{task.id}}" class="pure-form pure-form-stacked">
+<form method="post" action="/task/{{task.id}}">
     <fieldset>
-        <legend>Update Task</legend>
+        <div class="form-group">
+            <label for="task-title">Name</label>
+            <input required class="form-control" id="task-title" type="text" name="title" placeholder="Task Name" value="{{task.title}}" />
+        </div>
 
-        <label for="task-title">Name</label>
-        <input id="task-title" type="text" name="title" placeholder="Task Name" value="{{task.title}}" />
+        <div class="form-group">
+            <label for="task-description">Description</label>
+            <textarea class="form-control" id="task-description" name="description" placeholder="Task Description">{{task.description}}</textarea>
+        </div>
 
-        <label for="task-description">Description</label>
-        <textarea id="task-description" name="description" placeholder="Task Description">{{task.description}}</textarea>
-
-        <label for="task-conf">Confidence out of <strong>10</strong></label>
-        <input id="task-conf" type="number" min="0" max="10" name="confidence" value="{{task.confidence}}" />
+        <div class="form-group">
+            <label for="task-conf">Confidence out of <strong>10</strong></label>
+            <input class="form-control" id="task-conf" type="number" min="0" max="10" name="confidence" value="{{task.confidence}}" />
+        </div>
 
         <input type="hidden" name="parent" value={{task.parent.id}} />
 
-        <button type="submit" class="pure-button pure-button-primary">Update Task</button>
+        <label for="update-confirm"><input required id="update-confirm" name="update-task" type="checkbox" value="update">&nbsp;Are you sure?&nbsp;</label>
+        <button type="submit" class="btn btn-default">Update Task</button>
     </fieldset>
 </form>
+
+<hr />
 
 <form method="post" action="/task/{{task.id}}" class="pure-form">
     <fieldset>
         <legend>Delete Task</legend>
-
-        <label for="del-confirm"><input required id="del-confirm" name="delete-task" type="checkbox" value="delete"> Are you sure?</label>
-
-        <button type="submit" class="pure-button pure-button-primary">Delete This Task</button>
+        <label for="del-confirm"><input required id="del-confirm" name="delete-task" type="checkbox" value="delete">&nbsp;Are you sure?&nbsp;</label>
+        <button type="submit" class="btn btn-danger">Delete This Task</button>
     </fieldset>
 </form>
+
 {% endblock %}

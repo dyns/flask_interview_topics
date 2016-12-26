@@ -88,14 +88,20 @@ def update_task(task_id):
 			db.session.delete(task)
 			db.session.commit()
 			return redirect(url_for('index'))
-		if 'confidence' in request.form:
-			task.confidence = int(request.form['confidence'])
-		if 'title' in request.form:
-			task.title = str(request.form['title'])
-		if 'description' in request.form:
-			task.description = str(request.form['description'])
-		db.session.commit()
-		return redirect(url_for('index'))
+		elif 'update-task' in request.form and request.form['update-task'] == 'update':
+			if 'title' in request.form:
+				if request.form['title'].strip():
+					task.title = str(request.form['title'].strip())
+				else:
+					abort(400)
+			if 'confidence' in request.form:
+				task.confidence = int(request.form['confidence'])
+			if 'description' in request.form:
+				task.description = str(request.form['description'])
+			db.session.commit()
+			return render_template('task.html', task=task)
+		else:
+			abort(400)
 	else:
 		return render_template('task.html', task=task)
 
