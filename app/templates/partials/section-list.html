@@ -3,11 +3,11 @@
     {% for s in sections recursive %}
 
     <div class="list-group-item">
-        <i data-toggle="collapse" data-target="#item-{{s.id}}" class="collapse-link glyphicon glyphicon-chevron-right"></i>
+        <i data-toggle="collapse" data-target="#item-{{s.id}}" class="collapse-link glyphicon glyphicon-chevron-down"></i>
         <a href="/s/{{s.id}}">Section: {{s.title}}: confidence-{{ (s.completed_tasks / s.total_tasks * 100) | int}}&#37;</a>
     </div>
 
-    <div class="list-group collapse" id="item-{{s.id}}">
+    <div class="list-group collapse in" id="item-{{s.id}}">
         {% if s.sub_sections %} {{loop(s.sub_sections)}} {% endif %} {% for t in s.tasks %}
         <div class="list-group-item">
             <a href="/task/{{t.id}}">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
