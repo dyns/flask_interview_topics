@@ -1,19 +1,23 @@
-<ul>
+<div class="list-group list-group-root well">
+
     {% for s in sections recursive %}
 
-    <li><a class="pure-menu-link" href="/s/{{s.id}}">Section: {{s.title}}: confidence-{{ (s.completed_tasks / s.total_tasks * 100) | int}}&#37;</a></li>
-    {% if s.sub_sections %}
-    <ul>{{loop(s.sub_sections)}}</ul>
-    {% endif %}
+    <div class="list-group-item">
+        <i data-toggle="collapse" data-target="#item-{{s.id}}" class="collapse-link glyphicon glyphicon-chevron-right"></i>
+        <a href="/s/{{s.id}}">Section: {{s.title}}: confidence-{{ (s.completed_tasks / s.total_tasks * 100) | int}}&#37;</a>
+    </div>
 
-    <ul>
-        {% for t in s.tasks %}
-        <li><a href="/task/{{t.id}}" class="pure-menu-link">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a> </li>
+    <div class="list-group collapse" id="item-{{s.id}}">
+        {% if s.sub_sections %} {{loop(s.sub_sections)}} {% endif %} {% for t in s.tasks %}
+        <div class="list-group-item">
+            <a href="/task/{{t.id}}">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
+        </div>
         {% endfor %}
-    </ul>
-
+    </div>
     {% endfor %} {% for t in top_section_tasks %}
-    <li><a href="/task/{{t.id}}" class="pure-menu-link">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a> </li>
-    {% endfor%}
+    <div class="list-group-item">
+        <a href="/task/{{t.id}}">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
+    </div>
 
-</ul>
+    {% endfor%}
+</div>
