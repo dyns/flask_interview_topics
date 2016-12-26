@@ -1,5 +1,7 @@
 <div class="list-group list-group-root well">
 
+{% if sections or top_section_tasks %}
+
     {% for s in sections recursive %}
 
     <div class="list-group-item">
@@ -8,16 +10,44 @@
     </div>
 
     <div class="list-group collapse in" id="item-{{s.id}}">
-        {% if s.sub_sections %} {{loop(s.sub_sections)}} {% endif %} {% for t in s.tasks %}
-        <div class="list-group-item">
-            <a href="/task/{{t.id}}">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
-        </div>
-        {% endfor %}
+
+      {% if s.sub_sections or s.tasks %}
+
+      {% if s.sub_sections %}
+        {{loop(s.sub_sections)}}
+      {% endif %}
+      {% for t in s.tasks %}
+      <div class="list-group-item">
+          <a href="/task/{{t.id}}">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
+      </div>
+      {% endfor %}
+
+      {% else %}
+
+      <div class="list-group-item">
+          <span>Nothing the show here</span>
+      </div>
+
+      {% endif %}
+
+
+
     </div>
-    {% endfor %} {% for t in top_section_tasks %}
+
+    {% endfor %}
+
+    {% for t in top_section_tasks %}
     <div class="list-group-item">
         <a href="/task/{{t.id}}">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
     </div>
 
     {% endfor%}
+
+  {% else %}
+  <div class="list-group-item">
+      <span>No children</span>
+  </div>
+  {% endif %}
+
+
 </div>
