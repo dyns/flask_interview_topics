@@ -1,10 +1,7 @@
-import os
-from flask import render_template, jsonify, abort, url_for, redirect, json
+from flask import render_template, jsonify, abort, url_for, redirect, json, request
 from app import app
-from flask import request
 from app import models
 from app import db
-from datetime import datetime
 
 @app.route('/task', methods=['POST'])
 def task_post():
@@ -29,9 +26,10 @@ def update_task(task_id):
 		abort(404)
 	if request.method == 'POST':
 		if 'delete-task' in request.form and request.form['delete-task'] == 'delete':
+			parent_id = task.parent.id
 			db.session.delete(task)
 			db.session.commit()
-			return redirect(url_for('index'))
+			return redirect(url_for('section', sec_id=parent_id))
 		elif 'update-task' in request.form and request.form['update-task'] == 'update':
 			if 'title' in request.form:
 				if request.form['title'].strip():
