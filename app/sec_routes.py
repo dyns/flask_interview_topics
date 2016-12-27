@@ -7,11 +7,11 @@ from app import models
 from app import db
 from datetime import datetime
 
-@app.route('/s', methods=['GET', 'POST'])
+@app.route('/section', methods=['GET', 'POST'])
 def sections():
+	# Create new section
 	if request.method == 'POST':
-		title = request.form['title']
-		title = title.strip()
+		title = request.form['title'].strip()
 
 		if not title:
 			abort(400)
@@ -36,12 +36,12 @@ def sections():
 
 		db.session.add(s)
 		db.session.commit()
-		return redirect(url_for('index'))
+		return redirect(url_for('section', sec_id=s.id))
 	else:
 		sections = models.Section.query.all()
 		return jsonify([s.json() for s in sections])
 
-@app.route('/s/<int:sec_id>', methods=['GET','POST'])
+@app.route('/section/<int:sec_id>', methods=['GET','POST'])
 def section(sec_id):
 	sec = models.Section.query.get(sec_id)
 	if not sec:

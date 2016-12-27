@@ -14,11 +14,6 @@ def index():
 	add_progress(top_sections)
 	return render_template('index.html', sections=top_sections)
 
-
-
-
-
-
 @app.route('/load')
 def load_default():
 	SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
