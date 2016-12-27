@@ -7,7 +7,7 @@ from app import models
 from app import db
 from datetime import datetime
 
-@app.route('/section', methods=['GET', 'POST'])
+@app.route('/section', methods=['POST'])
 def sections():
 	# Create new section
 	if request.method == 'POST':
