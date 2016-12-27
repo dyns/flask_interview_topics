@@ -33,7 +33,7 @@ def update_task(task_id):
 		elif 'update-task' in request.form and request.form['update-task'] == 'update':
 			if 'title' in request.form:
 				title = request.form['title'].strip()
-				if title and title <= models.Task.MAX_TITLE_LENGTH:
+				if title and len(title) <= models.Task.MAX_TITLE_LENGTH:
 					task.title = title
 				else:
 					abort(400)
