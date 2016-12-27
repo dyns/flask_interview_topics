@@ -30,13 +30,25 @@ def sections():
 			else:
 				parent = models.Section.query.get(parent_id)
 				if parent:
-					s.parent = parent
+					if getSectionDepth(parent) <= (MAX_SECTION_DEPTH - 1):
+						s.parent = parent
+					else:
+						abort(400)
 				else:
 					abort(404)
 
 		db.session.add(s)
 		db.session.commit()
 		return redirect(url_for('section', sec_id=s.id))
+
+MAX_SECTION_DEPTH = 10
+
+def getSectionDepth(section):
+	depth = 1
+	while(section.parent is not None):
+		depth += 1
+		section = section.parent
+	return depth
 
 @app.route('/section/<int:sec_id>', methods=['GET','POST'])
 def section(sec_id):
