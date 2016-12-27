@@ -35,13 +35,17 @@ def update_task(task_id):
 		elif 'update-task' in request.form and request.form['update-task'] == 'update':
 			if 'title' in request.form:
 				if request.form['title'].strip():
-					task.title = str(request.form['title'].strip())
+					task.title = request.form['title'].strip()
 				else:
 					abort(400)
 			if 'confidence' in request.form:
-				task.confidence = int(request.form['confidence'])
+				confidence = int(request.form['confidence'])
+				if confidence >= 0 and confidence <= 10:
+					task.confidence = confidence
+				else:
+					abort(400)
 			if 'description' in request.form:
-				task.description = str(request.form['description'])
+				task.description = request.form['description'].strip()
 			db.session.commit()
 			return render_template('task.html', task=task)
 		else:

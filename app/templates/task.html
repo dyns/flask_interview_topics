@@ -15,10 +15,10 @@
 
         <div class="form-group">
             <label for="task-conf">Confidence out of <strong>10</strong></label>
-            <input class="form-control" id="task-conf" type="number" min="0" max="10" name="confidence" value="{{task.confidence}}" />
+            <input class="form-control" id="task-conf" type="number" min="0" max="10" name="confidence" value="{{task.confidence}}" required />
         </div>
 
-        <input type="hidden" name="parent" value={{task.parent.id}} />
+        <input type="hidden" name="parent" value="{{task.parent.id}}" />
 
         <label for="update-confirm"><input required id="update-confirm" name="update-task" type="checkbox" value="update">&nbsp;Are you sure?&nbsp;</label>
         <button type="submit" class="btn btn-default">Update Task</button>
