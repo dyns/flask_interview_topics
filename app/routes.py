@@ -5,42 +5,14 @@ from flask import request
 from app import models
 from app import db
 from datetime import datetime
+from app.sec_routes import *
+from app.task_routes import *
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
-	if request.method == 'POST':
-		title = request.form['title']
-		title = title.strip()
-
-		if not title:
-			abort(400)
-
-		s = models.Section(title)
-
-		if 'description' in request.form:
-			s.description = request.form['description'].strip()
-
-		if 'parent-id' in request.form:
-			parent_id = request.form['parent-id'].strip()
-			try:
-				parent_id = int(parent_id)
-			except ValueError:
-				abort(400)
-			else:
-				parent = models.Section.query.get(parent_id)
-				if parent:
-					s.parent = parent
-				else:
-					abort(404)
-
-		db.session.add(s)
-		db.session.commit()
-		return redirect(url_for('index'))
-
-	elif request.method == 'GET':
-		top_sections = models.Section.query.filter(models.Section.parent == None).all()
-		add_progress(top_sections)
-		return render_template('index.html', sections=top_sections)
+	top_sections = models.Section.query.filter(models.Section.parent == None).all()
+	add_progress(top_sections)
+	return render_template('index.html', sections=top_sections)
 
 def add_progress(sections):
 	for section in sections:
@@ -67,74 +39,9 @@ def set_section_progress(section):
 
 	return (completed_tasks, total_tasks)
 
-@app.route('/task', methods=['POST'])
-def task_post():
-	title = request.form['title'].strip()
-	description = request.form['description'].strip()
-	parent_id = request.form['parent']
-	parent = models.Section.query.get(parent_id)
-	t = models.Task(title, description, None, 0, parent)
-	db.session.add(t)
-	db.session.commit()
-	return redirect(url_for('index'))
 
-@app.route('/task/<int:task_id>', methods=['GET','POST'])
-def update_task(task_id):
-	task = models.Task.query.get(task_id)
-	if task is None:
-		abort(404)
-	if request.method == 'POST':
-		if 'delete-task' in request.form and request.form['delete-task'] == 'delete':
-			db.session.delete(task)
-			db.session.commit()
-			return redirect(url_for('index'))
-		elif 'update-task' in request.form and request.form['update-task'] == 'update':
-			if 'title' in request.form:
-				if request.form['title'].strip():
-					task.title = str(request.form['title'].strip())
-				else:
-					abort(400)
-			if 'confidence' in request.form:
-				task.confidence = int(request.form['confidence'])
-			if 'description' in request.form:
-				task.description = str(request.form['description'])
-			db.session.commit()
-			return render_template('task.html', task=task)
-		else:
-			abort(400)
-	else:
-		return render_template('task.html', task=task)
 
-@app.route('/s')
-def sections():
-	sections = models.Section.query.all()
-	return jsonify([s.json() for s in sections])
 
-@app.route('/s/<int:sec_id>', methods=['GET','POST'])
-def section(sec_id):
-	sec = models.Section.query.get(sec_id)
-	if not sec:
-		abort(404)
-
-	if request.method == 'POST':
-		if 'delete-sec' in request.form and request.form['delete-sec'] == 'delete':
-			remove_children(sec)
-			db.session.commit()
-			return redirect(url_for('index'))
-	else:
-		add_progress([sec])
-		return render_template('section.html', sec=sec)
-
-def remove_children(sec):
-	for task in sec.tasks:
-		db.session.delete(task)
-	for sub_s in sec.sub_sections:
-		remove_children(sub_s)
-	db.session.delete(sec)
-
-@app.route('/getting')
-def getting_interview():
-	return render_template('getting-the-interview.html')
 
 @app.route('/load')
 def load_default():
