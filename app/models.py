@@ -2,8 +2,9 @@
 from app import db
 
 class Section(db.Model):
+	MAX_TITLE_LENGTH = 80
 	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(80))
+	title = db.Column(db.String(MAX_TITLE_LENGTH))
 	description = db.Column(db.Text)
 	due_date = db.Column(db.DateTime)
 
@@ -34,8 +35,9 @@ class Section(db.Model):
 		return data
 
 class Task(db.Model):
+	MAX_TITLE_LENGTH = 80
 	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(80))
+	title = db.Column(db.String(MAX_TITLE_LENGTH))
 	description = db.Column(db.Text)
 	due_date = db.Column(db.DateTime)
 	parent_section_id = db.Column(db.Integer, db.ForeignKey('section.id'))

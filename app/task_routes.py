@@ -6,7 +6,7 @@ from app import db
 @app.route('/task', methods=['POST'])
 def task_post():
 	title = request.form['title'].strip()
-	if not title:
+	if not title or len(title) > models.Task.MAX_TITLE_LENGTH:
 		abort(400)
 	description = request.form['description'].strip()
 	parent_id = request.form['parent'].strip()
@@ -32,8 +32,9 @@ def update_task(task_id):
 			return redirect(url_for('section', sec_id=parent_id))
 		elif 'update-task' in request.form and request.form['update-task'] == 'update':
 			if 'title' in request.form:
-				if request.form['title'].strip():
-					task.title = request.form['title'].strip()
+				title = request.form['title'].strip()
+				if title and title <= models.Task.MAX_TITLE_LENGTH:
+					task.title = title
 				else:
 					abort(400)
 			if 'confidence' in request.form:

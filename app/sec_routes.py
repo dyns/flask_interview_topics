@@ -10,7 +10,7 @@ def sections():
 	if request.method == 'POST':
 		title = request.form['title'].strip()
 
-		if not title:
+		if not title or len(title) > models.Section.MAX_TITLE_LENGTH:
 			abort(400)
 
 		s = models.Section(title)
@@ -60,7 +60,7 @@ def section(sec_id):
 			return redirect(url_for('index'))
 		elif 'update-section' in request.form and request.form['update-section'] == 'update':
 			if 'title' in request.form:
-				if request.form['title'].strip():
+				if request.form['title'].strip() and len(request.form['title'].strip()) <= models.Section.MAX_TITLE_LENGTH:
 					sec.title = request.form['title'].strip()
 				else:
 					abort(400)
