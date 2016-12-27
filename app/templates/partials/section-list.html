@@ -6,7 +6,7 @@
 
     <div class="list-group-item">
         <i data-toggle="collapse" data-target="#item-{{s.id}}" class="collapse-link glyphicon glyphicon-chevron-down"></i>
-        <a href="/s/{{s.id}}">Section: {{s.title}}: confidence-{{ (s.completed_tasks / s.total_tasks * 100) | int}}&#37;</a>
+        <a href="/section/{{s.id}}">Section: {{s.title}}: confidence-{{ (s.completed_tasks / s.total_tasks * 100) | int}}&#37;</a>
     </div>
 
     <div class="list-group collapse in" id="item-{{s.id}}">
