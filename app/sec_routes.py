@@ -37,9 +37,6 @@ def sections():
 		db.session.add(s)
 		db.session.commit()
 		return redirect(url_for('section', sec_id=s.id))
-	else:
-		sections = models.Section.query.all()
-		return jsonify([s.json() for s in sections])
 
 @app.route('/section/<int:sec_id>', methods=['GET','POST'])
 def section(sec_id):
@@ -52,6 +49,18 @@ def section(sec_id):
 			remove_children(sec)
 			db.session.commit()
 			return redirect(url_for('index'))
+		elif 'update-section' in request.form and request.form['update-section'] == 'update':
+			if 'title' in request.form:
+				if request.form['title'].strip():
+					sec.title = request.form['title'].strip()
+				else:
+					abort(400)
+			if 'description' in request.form:
+				sec.description = request.form['description'].strip()
+			db.session.commit()
+			return redirect(url_for('section', sec_id=s.id))
+		else:
+			abort(400)
 	else:
 		add_progress([sec])
 		return render_template('section.html', sec=sec)
