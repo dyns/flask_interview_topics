@@ -9,13 +9,17 @@ from datetime import datetime
 @app.route('/task', methods=['POST'])
 def task_post():
 	title = request.form['title'].strip()
+	if not title:
+		abort(400)
 	description = request.form['description'].strip()
-	parent_id = request.form['parent']
+	parent_id = request.form['parent'].strip()
 	parent = models.Section.query.get(parent_id)
+	if parent is None:
+		abort(400)
 	t = models.Task(title, description, None, 0, parent)
 	db.session.add(t)
 	db.session.commit()
-	return redirect(url_for('index'))
+	return redirect(url_for('section', sec_id=parent.id))
 
 
 @app.route('/task/<int:task_id>', methods=['GET','POST'])

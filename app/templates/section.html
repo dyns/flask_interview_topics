@@ -2,7 +2,7 @@
 
 <h1>{{sec.title}}</h1>
 
-<form class="pure-form pure-form-stacked">
+<form class="pure-form pure-form-stacked" method="post" action="/section/{{sec.id}}">
     <fieldset>
         <div class="form-group">
             <label for="header-section-name">Section Name</label>
@@ -42,7 +42,7 @@
 
 <hr />
 
-<form method="post" action="/s">
+<form method="post" action="/section">
     <legend>Add Sub-Section to this Section</legend>
     <fieldset>
         <div class="form-group">
@@ -63,7 +63,7 @@
 
 <hr />
 
-<form method="post" action="/s/{{sec.id}}">
+<form method="post" action="/section/{{sec.id}}">
     <fieldset>
         <legend>Delete Section and <strong>all</strong> Children</legend>
         <label for="del-confirm"><input required id="del-confirm" name="delete-sec" type="checkbox" value="delete">&nbsp;Are you sure?&nbsp;</label>

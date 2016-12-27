@@ -18,7 +18,7 @@
       {% endif %}
       {% for t in s.tasks %}
       <div class="list-group-item">
-          <a href="/task/{{t.id}}">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
+          <a href="/task/{{t.id}}">Task: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
       </div>
       {% endfor %}
 
@@ -38,7 +38,7 @@
 
     {% for t in top_section_tasks %}
     <div class="list-group-item">
-        <a href="/task/{{t.id}}">Topic: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
+        <a href="/task/{{t.id}}">Task: {{t.title}}: confidence-{{(t.confidence / 10 * 100) | int}}&#37;</a>
     </div>
 
     {% endfor%}

@@ -58,7 +58,7 @@ def section(sec_id):
 			if 'description' in request.form:
 				sec.description = request.form['description'].strip()
 			db.session.commit()
-			return redirect(url_for('section', sec_id=s.id))
+			return redirect(url_for('section', sec_id=sec.id))
 		else:
 			abort(400)
 	else:
